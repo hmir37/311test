@@ -1,0 +1,183 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ============================================================
+   Apple-inspired Design Tokens
+   Clean, restrained palette with semantic naming.
+   ============================================================ */
+
+:root {
+  /* Surfaces */
+  --surface-primary: #ffffff;
+  --surface-secondary: #f5f5f7;
+  --surface-tertiary: #e8e8ed;
+  --surface-elevated: #ffffff;
+
+  /* Labels */
+  --label-primary: #1d1d1f;
+  --label-secondary: #6e6e73;
+  --label-tertiary: #aeaeb2;
+
+  /* Accent – restrained blue, Apple-style */
+  --accent: #0071e3;
+  --accent-hover: #0077ed;
+  --accent-subtle: rgba(0, 113, 227, 0.08);
+
+  /* Separators & rings */
+  --separator: rgba(0, 0, 0, 0.06);
+  --ring: rgba(0, 113, 227, 0.4);
+
+  /* Map overlay glass */
+  --glass-bg: rgba(255, 255, 255, 0.82);
+  --glass-border: rgba(0, 0, 0, 0.06);
+  --glass-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
+}
+
+.dark {
+  --surface-primary: #000000;
+  --surface-secondary: #1c1c1e;
+  --surface-tertiary: #2c2c2e;
+  --surface-elevated: #1c1c1e;
+
+  --label-primary: #f5f5f7;
+  --label-secondary: #98989d;
+  --label-tertiary: #636366;
+
+  --accent: #0a84ff;
+  --accent-hover: #409cff;
+  --accent-subtle: rgba(10, 132, 255, 0.12);
+
+  --separator: rgba(255, 255, 255, 0.08);
+  --ring: rgba(10, 132, 255, 0.5);
+
+  --glass-bg: rgba(28, 28, 30, 0.82);
+  --glass-border: rgba(255, 255, 255, 0.08);
+  --glass-shadow: 0 4px 24px rgba(0, 0, 0, 0.3);
+}
+
+/* ============================================================
+   Base reset & typography
+   ============================================================ */
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  @apply bg-surface-primary text-label-primary font-sans;
+  margin: 0;
+  overflow: hidden; /* Full-screen map – no body scroll */
+}
+
+/* ============================================================
+   Glass morphism utility
+   ============================================================ */
+
+.glass {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-shadow);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+}
+
+/* ============================================================
+   Scrollbar styling – thin, Apple-like
+   ============================================================ */
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: var(--label-tertiary);
+  border-radius: 3px;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: var(--label-secondary);
+}
+
+/* ============================================================
+   Mapbox overrides – blend with our design system
+   ============================================================ */
+
+.mapboxgl-popup-content {
+  @apply rounded-xl shadow-elevated p-0 border-0;
+  background: var(--glass-bg);
+  backdrop-filter: blur(20px) saturate(180%);
+}
+
+.mapboxgl-popup-tip {
+  border-top-color: var(--glass-bg) !important;
+}
+
+.mapboxgl-ctrl-group {
+  @apply rounded-xl shadow-medium;
+  background: var(--glass-bg) !important;
+  backdrop-filter: blur(20px) saturate(180%) !important;
+  border: 1px solid var(--glass-border) !important;
+}
+
+.mapboxgl-ctrl-group button {
+  border-bottom: 1px solid var(--separator) !important;
+}
+
+.mapboxgl-ctrl-group button:last-child {
+  border-bottom: none !important;
+}
+
+.mapboxgl-ctrl-attrib {
+  @apply text-xs;
+  background: transparent !important;
+  color: var(--label-tertiary) !important;
+}
+
+.mapboxgl-ctrl-attrib a {
+  color: var(--label-secondary) !important;
+}
+
+/* ============================================================
+   Transitions
+   ============================================================ */
+
+.transition-apple {
+  transition: all 0.25s cubic-bezier(0.25, 0.1, 0.25, 1);
+}
+
+.hover-lift {
+  transition: transform 0.2s cubic-bezier(0.25, 0.1, 0.25, 1),
+    box-shadow 0.2s cubic-bezier(0.25, 0.1, 0.25, 1);
+}
+.hover-lift:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+}
+
+/* ============================================================
+   Loading shimmer
+   ============================================================ */
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.shimmer {
+  background: linear-gradient(
+    90deg,
+    var(--surface-secondary) 25%,
+    var(--surface-tertiary) 50%,
+    var(--surface-secondary) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s ease-in-out infinite;
+}
